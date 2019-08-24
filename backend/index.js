@@ -1,16 +1,13 @@
-const Dragon = require("./dragon.js");
+const express = require("express");
+const GenerationEngine = require("./engine");
 
-const fooey = new Dragon({ birthdate: new Date(), nickname: "fooey" });
+const app = express();
+const engine = new GenerationEngine();
 
-const baloo = new Dragon({ birthdate: new Date(), nickname: "baloo" });
+engine.start();
 
-const mimar = new Dragon();
+app.get("/dragon/new", (req, res) => {
+  res.json({ dragon: engine.generation.newDragon() });
+});
 
-setTimeout(() => {
-  const gooby = new Dragon();
-  console.log("gooby", gooby);
-}, 3000);
-
-console.log("fooey", fooey);
-console.log("baloo", baloo);
-console.log("mimar", mimar);
+module.exports = app;
